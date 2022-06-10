@@ -1,0 +1,35 @@
+{
+  "storage": {
+    "host": "localhost",
+    "user": "root",
+    "password": "",
+    "database": "supplychain"
+  },
+  "pool": {
+    "connectionLimit": 80,
+    "connectTimeout": 500000,
+    "acquireTimeout": 500000,
+    "queryTimeout": 10000000
+  },
+  "webServer": {
+    "port": 4001,
+    "instance": 1,
+    "timeout": 50000,
+    "domain": "",
+    "CorsAllowed": ["http://localhost:3000"]
+  },
+  "webConstants": {
+    "textPlain": "text/plain",
+    "appJson": "application/json",
+    "appStream": "multipart/form-data",
+    "noDataAvailable": -1
+  },
+  "endpoints": {
+    "userContext": "/api/v1.0/sc/user",
+    "roleContext": "/api/v1.0/sc/role",
+    "productContext": "/api/v1.0/sc/product",
+    "orderContext": "/api/v1.0/sc/order",
+    "locationContext": "/api/v1.0/sc/location",
+    "measurementUnitContext": "/api/v1.0/sc/measurementUnit"
+  }
+}
