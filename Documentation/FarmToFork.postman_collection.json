@@ -1,0 +1,237 @@
+{
+	"info": {
+		"_postman_id": "10ff4934-94c3-4c23-b60f-e87d5b8a2028",
+		"name": "FarmToFork",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "UserController",
+			"item": [
+				{
+					"name": "SignUp",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test.test@gmail.com\",\r\n    \"password\": \"testtest\",\r\n    \"firstName\": \"Test\",\r\n    \"lastName\": \"Test\",\r\n    \"roleId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/sc/user/signUp",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"sc",
+								"user",
+								"signUp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LogIn",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"valentingorcea@gmail.com\",\r\n    \"password\": \"testtest\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/sc/user/logIn",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"sc",
+								"user",
+								"logIn"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUsers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/tm/user/?roleId=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"tm",
+								"user",
+								""
+							],
+							"query": [
+								{
+									"key": "roleId",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Available Parameters: ApplicationId, UserId, UserName, LoweredUserName, MobileAlias, IsAnonymous, LastActivityDate, ClientId, ReceivesNotifications"
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserMe",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/tm/user/me",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"tm",
+								"user",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUser",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"valentin\",\r\n    \"details\": \"mda\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/sc/user/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"sc",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ChangePassword",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"password\": \"testtest\",\r\n    \"newPassword\": \"testtest\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/sc/user/changePassword",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"sc",
+								"user",
+								"changePassword"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

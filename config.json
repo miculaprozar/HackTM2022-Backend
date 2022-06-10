@@ -1,9 +1,9 @@
 {
   "storage": {
-    "host": "localhost",
-    "user": "root",
-    "password": "",
-    "database": "supplychain"
+    "host": "eu-cdbr-west-02.cleardb.net",
+    "user": "b150c937956067",
+    "password": "d31965d9",
+    "database": "heroku_b2678efebd34303"
   },
   "pool": {
     "connectionLimit": 80,
