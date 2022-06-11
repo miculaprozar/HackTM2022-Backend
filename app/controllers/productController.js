@@ -53,7 +53,8 @@ let router = function (productService, webConstants) {
     [
       check("name", "Nume obligatoriu").exists(),
       check("quantity", "Cantitate obligatorie").exists(),
-      check("measurementUnitId", "measurementUnitId obligatoriu").exists()
+      check("measurementUnitId", "measurementUnitId obligatoriu").exists(),
+      check("price", "price obligatoriu").exists()
     ],
     async (req, res, next) => {
       const validatorError = validationResult(req);
@@ -66,7 +67,9 @@ let router = function (productService, webConstants) {
           name: req.body.name,
           description: req.body.description ? req.body.description : '',
           quantity: req.body.quantity,
-          measurementUnitId: req.body.measurementUnitId
+          measurementUnitId: req.body.measurementUnitId,
+          price: req.body.price,
+          currency: req.body.currency
         };
         let result = await productService.createProduct(product);
 

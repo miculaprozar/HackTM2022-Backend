@@ -17,7 +17,7 @@ function ProductService(configuration, dbService) {
 ProductService.prototype.getProducts = async function (parameters) {
   return new Promise(async (resolve, reject) => {
     try {
-      let sql = `SELECT p.id, p.name, p.description, p.quantity, p.measurementUnitId, mu.name, u.id as userId, u.firstName, u.lastName, u.companyName 
+      let sql = `SELECT p.id, p.name, p.description, p.quantity, p.measurementUnitId, p.price, p.currency, mu.name, u.id as userId, u.firstName, u.lastName, u.companyName 
       FROM products p, users u, measurementunit mu 
       WHERE mu.id = p.measurementUnitId 
       AND p.userId = u.id`;
@@ -82,10 +82,10 @@ ProductService.prototype.updateProduct = async function (
 ProductService.prototype.createProduct = async function (parameters) {
   return new Promise(async (resolve, reject) => {
     try {
-      let sql = `INSERT INTO products(name, description, quantity, measurementUnitId, userId) 
-      VALUES(?, ?, ?, ?, ?)`;
+      let sql = `INSERT INTO products(name, description, quantity, measurementUnitId, userId, price, currency) 
+      VALUES(?, ?, ?, ?, ?, ?, ?)`;
 
-      await this._dbService.query(sql, [parameters.name, parameters.description, parameters.quantity, parameters.measurementUnitId, parameters.userId]).catch((err) => {
+      await this._dbService.query(sql, [parameters.name, parameters.description, parameters.quantity, parameters.measurementUnitId, parameters.userId, parameters.price, parameters.currency]).catch((err) => {
         log.error(err);
         throw new HttpError(500, "Nu s-a putut face adaugarea!");
       });
