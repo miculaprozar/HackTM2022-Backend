@@ -20,7 +20,7 @@ UserService.prototype.getUsers = async function (parameters) {
       let sql = `SELECT users.id, users.email, users.details, users.firstName, users.lastName, users.roleId, users.companyName, 
       users.companyVAT, users.companyRegNumber, users.companyIBAN, users.details, roles.name as roleName
       FROM (users, roles)
-      WHERE roles.id = users.roleId AND user.isSuspended = 0 `;
+      WHERE roles.id = users.roleId AND users.isSuspended = 0 `;
 
       if (
         parameters &&
