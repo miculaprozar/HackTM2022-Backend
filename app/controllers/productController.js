@@ -7,10 +7,10 @@ const { check, validationResult } = require("express-validator");
 const addParameters = require("../util/addParameters");
 const log = require("../services/logService");
 
-let locationRouter = express.Router();
+let productRouter = express.Router();
 
-let router = function (locationService, webConstants) {
-  locationRouter.use((req, res, next) => {
+let router = function (productService, webConstants) {
+  productRouter.use((req, res, next) => {
     var contentType = req.headers["content-type"] || "",
       mime = contentType.split(";")[0];
 
@@ -21,10 +21,10 @@ let router = function (locationService, webConstants) {
     return next();
   });
 
-  locationRouter.get("/", checkAuth, async (req, res, next) => {
+  productRouter.get("/", checkAuth, async (req, res, next) => {
     try {
       let parameters = addParameters(req.query, [], "");
-      let users = await locationService.getLocations(parameters);
+      let users = await productService.getProducts(parameters);
       res.setHeader("Status", 200);
       res.send(users);
     } catch (error) {
@@ -33,10 +33,10 @@ let router = function (locationService, webConstants) {
     }
   });
 
-  locationRouter.put("/:id", checkAuth, async (req, res, next) => {
+  productRouter.put("/:id", checkAuth, async (req, res, next) => {
     try {
-      let parameters = addParameters(req.body, ["id", "userId", "longitude", "latitude"], "");
-      const result = await locationService.updateLocation(
+      let parameters = addParameters(req.body, ["id", "userId"], "");
+      const result = await productService.updateProduct(
         { id: req.params.id, userId: req.userData.UserId },
         parameters
       );
@@ -48,11 +48,12 @@ let router = function (locationService, webConstants) {
     }
   });
 
-  locationRouter.post(
+  productRouter.post(
     "/", checkAuth,
     [
-      check("longitude", "Longitudine obligatoriu").exists(),
-      check("latitude", "Latitudine obligatorie").exists()
+      check("name", "Nume obligatoriu").exists(),
+      check("quantity", "Cantitate obligatorie").exists(),
+      check("measurementUnitId", "measurementUnitId obligatoriu").exists()
     ],
     async (req, res, next) => {
       const validatorError = validationResult(req);
@@ -60,13 +61,14 @@ let router = function (locationService, webConstants) {
         return res.status(400).json({ errors: validatorError.array() });
       }
       try {
-        let location = {
+        let product = {
           userId: req.userData.UserId,
-          longitude: req.body.longitude,
-          latitude: req.body.latitude,
-          details: req.body.details ? req.body.details : ''
+          name: req.body.name,
+          description: req.body.description ? req.body.description : '',
+          quantity: req.body.quantity,
+          measurementUnitId: req.body.measurementUnitId
         };
-        let result = await locationService.createLocation(location);
+        let result = await productService.createProduct(product);
 
         res.setHeader("Status", 200);
         res.send(result);
@@ -77,7 +79,7 @@ let router = function (locationService, webConstants) {
     }
   );
 
-  return locationRouter;
+  return productRouter;
 };
 
 module.exports = router;

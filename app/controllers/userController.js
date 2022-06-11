@@ -33,7 +33,7 @@ let router = function (userService, webConstants) {
     }
   });
 
-  userRouter.get("/", checkAuth, async (req, res, next) => {
+  userRouter.get("/", async (req, res, next) => {
     try {
       let parameters = addParameters(req.query, [], "");
       let users = await userService.getUsers(parameters);
