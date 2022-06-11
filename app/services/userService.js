@@ -17,8 +17,8 @@ function UserService(configuration, dbService) {
 UserService.prototype.getUsers = async function (parameters) {
   return new Promise(async (resolve, reject) => {
     try {
-      let sql = `SELECT user.id, user.email, user.firstName, user.lastName, user.roleId, role.name as roleName
-      FROM (user, roles)
+      let sql = `SELECT users.id, users.email, users.firstName, users.lastName, users.roleId, roles.name as roleName
+      FROM (users, roles)
       WHERE roles.id = users.roleId`;
 
       if (
@@ -26,12 +26,12 @@ UserService.prototype.getUsers = async function (parameters) {
         typeof parameters === "object" &&
         Object.keys(parameters).length > 0
       ) {
-        sql = addQueryConditions(sql, parameters, false, "user.");
+        sql = addQueryConditions(sql, parameters, false, "users.");
       }
-      const result = await this._dbService.query(sql);
+      let result = await this._dbService.query(sql);
 
       result = await Promise.all(result.map(async user => {
-        let locations = await this._dbService.query(`SELECT * from location where l.userId=?`, [user.id]);
+        let locations = await this._dbService.query(`SELECT * from locations where locations.userId=?`, [user.id]);
 
         if (locations && locations.length > 0) {
           user.locations = locations;
@@ -55,7 +55,7 @@ UserService.prototype.updateUser = async function (
 ) {
   return new Promise(async (resolve, reject) => {
     try {
-      let sql = `UPDATE user SET `;
+      let sql = `UPDATE users SET `;
       if (
         !(
           parameters &&
@@ -94,7 +94,7 @@ UserService.prototype.updateUser = async function (
 UserService.prototype.logIn = async function (parameters) {
   return new Promise(async (resolve, reject) => {
     try {
-      let sql = `SELECT u.id, u.password, u.roleId from user u
+      let sql = `SELECT u.id, u.password, u.roleId from users u
        WHERE u.email = '${parameters.email}'`;
 
       const user = await this._dbService.query(sql);
@@ -133,7 +133,7 @@ UserService.prototype.changePassword = async function (parameters, userId) {
   return new Promise(async (resolve, reject) => {
     try {
 
-      let sql = `SELECT u.id, u.password from user u
+      let sql = `SELECT u.id, u.password from users u
        WHERE u.id = '${parameters.id}'`;
 
       const user = await this._dbService.query(sql);
@@ -162,7 +162,7 @@ UserService.prototype.changePassword = async function (parameters, userId) {
                   } else {
                     await this._dbService
                       .query(
-                        `UPDATE user set password = '${hash}'
+                        `UPDATE users set password = '${hash}'
                 WHERE id = '${user[0].id}'`
                       )
                       .catch((err) => {
@@ -201,7 +201,7 @@ UserService.prototype.changePassword = async function (parameters, userId) {
 UserService.prototype.signUp = async function (parameters, userId) {
   return new Promise(async (resolve, reject) => {
     try {
-      let sql = `SELECT u.id from user u
+      let sql = `SELECT u.id from users u
       WHERE u.email = '${parameters.email}'`;
 
       let user = await this._dbService.query(sql);
@@ -222,7 +222,7 @@ UserService.prototype.signUp = async function (parameters, userId) {
           log.error(err);
           return reject("Ceva nu a mers bine la inregistrarea parolei!");
         } else {
-          sql = `INSERT INTO user(email, firstName, lastName, password, roleId) 
+          sql = `INSERT INTO users(email, firstName, lastName, password, roleId) 
           VALUES(?, ?, ?, ?, ?)`;
           await this._dbService
             .query(sql, [
@@ -238,7 +238,7 @@ UserService.prototype.signUp = async function (parameters, userId) {
             });
           user = await this._dbService
             .query(
-              `SELECT u.id from user u
+              `SELECT u.id from users u
           WHERE u.email = '${parameters.email}'`
             )
             .catch((err) => {
