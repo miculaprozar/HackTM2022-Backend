@@ -17,11 +17,10 @@ function ProductService(configuration, dbService) {
 ProductService.prototype.getProducts = async function (parameters) {
   return new Promise(async (resolve, reject) => {
     try {
-      let sql = `SELECT p.id, p.name, p.description, p.quantity, p.measurementUnitId, p.price, p.currency, mu.name, u.id as userId, u.firstName, u.lastName, u.companyName 
+      let sql = `SELECT p.id, p.name, p.description, p.quantity, p.measurementUnitId, p.price, p.currency, p.isAvailable, mu.name, u.id as userId, u.firstName, u.lastName, u.companyName 
       FROM products p, users u, measurementunit mu 
       WHERE mu.id = p.measurementUnitId 
-      AND p.userId = u.id 
-      AND u.isSuspended = 0 `;
+      AND p.userId = u.id `;
       if (
         parameters &&
         typeof parameters === "object" &&
