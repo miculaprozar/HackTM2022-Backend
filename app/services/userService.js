@@ -17,7 +17,7 @@ function UserService(configuration, dbService) {
 UserService.prototype.getUsers = async function (parameters) {
   return new Promise(async (resolve, reject) => {
     try {
-      let sql = `SELECT users.id, users.email, user.details, users.firstName, users.lastName, users.roleId, users.companyName, 
+      let sql = `SELECT users.id, users.email, users.details, users.firstName, users.lastName, users.roleId, users.companyName, 
       users.companyVAT, users.companyRegNumber, users.companyIBAN, users.details, roles.name as roleName
       FROM (users, roles)
       WHERE roles.id = users.roleId`;
