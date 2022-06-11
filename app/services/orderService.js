@@ -58,7 +58,7 @@ OrderService.prototype.getOrders = async function (parameters) {
         typeof parameters === "object" &&
         Object.keys(parameters).length > 0
       ) {
-        sql = addQueryConditions(sql, parameters, true, "o.");
+        sql = addQueryConditions(sql, parameters, true, "orders.");
       }
       let result = await this._dbService.query(sql);
 
