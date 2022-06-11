@@ -100,6 +100,22 @@ let router = function (orderService, webConstants) {
     }
   });
 
+  orderRouter.put("/super/AI/:id", async (req, res, next) => {
+    try {
+      let parameters = addParameters(req.body, ["id", "orderId", "productId", "productName", "productDescription", "quantity",
+        "measurementUnit", "price", "currency"], "");
+      const result = await orderService.updateOrderProduct(
+        { id: req.params.id },
+        parameters
+      );
+
+      res.status(200).send(result);
+    } catch (error) {
+      log.error(error.message || error);
+      return next(new HttpError(500, error.message || error));
+    }
+  });
+
   orderRouter.post(
     "/", checkAuth,
     [
