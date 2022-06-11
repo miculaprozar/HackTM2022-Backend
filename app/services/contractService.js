@@ -9,24 +9,21 @@ const addQueryConditions = require("../util/addQueryConditions");
 const addUpdateQueryConditions = require("../util/addUpdateQueryConditions");
 const { param } = require("express-validator");
 
-function ProductService(configuration, dbService) {
+function ContractService(configuration, dbService) {
   this._dbService = dbService;
   this._config = configuration;
 }
 
-ProductService.prototype.getProducts = async function (parameters) {
+ContractService.prototype.getContracts = async function (parameters) {
   return new Promise(async (resolve, reject) => {
     try {
-      let sql = `SELECT p.id, p.name, p.description, p.quantity, p.measurementUnitId, mu.name, u.id as userId, u.firstName, u.lastName, u.companyName 
-      FROM products p, users u, measurementunit mu 
-      WHERE mu.id = p.measurementUnitId 
-      AND p.userId = u.id`;
+      let sql = `SELECT * from contract `;
       if (
         parameters &&
         typeof parameters === "object" &&
         Object.keys(parameters).length > 0
       ) {
-        sql = addQueryConditions(sql, parameters, false, "p.");
+        sql = addQueryConditions(sql, parameters, true, "");
       }
       let result = await this._dbService.query(sql);
 
@@ -37,13 +34,13 @@ ProductService.prototype.getProducts = async function (parameters) {
   });
 };
 
-ProductService.prototype.updateProduct = async function (
+ContractService.prototype.updateContract = async function (
   idObject,
   parameters
 ) {
   return new Promise(async (resolve, reject) => {
     try {
-      let sql = `UPDATE products SET `;
+      let sql = `UPDATE contract SET `;
       if (
         !(
           parameters &&
@@ -67,7 +64,7 @@ ProductService.prototype.updateProduct = async function (
         log.error(err);
         throw new HttpError(500, "Nu s-au putut face modificarile!");
       });
-      const result = await this.getProducts(idObject).catch((err) => {
+      const result = await this.getContracts(idObject).catch((err) => {
         log.error(err);
         throw new HttpError(500, "Ceva nu a mers bine!");
       });
@@ -79,22 +76,25 @@ ProductService.prototype.updateProduct = async function (
   });
 };
 
-ProductService.prototype.createProduct = async function (parameters) {
+ContractService.prototype.createContract = async function (parameters) {
   return new Promise(async (resolve, reject) => {
     try {
-      let sql = `INSERT INTO products(name, description, quantity, measurementUnitId, userId) 
-      VALUES(?, ?, ?, ?, ?)`;
+      let sql = `INSERT INTO contract(customerId, sellerId, customerCompanyName, customerVAT, customerRegNumber, 
+        customerIBAN, sellerCompanyName, sellerVAT, sellerRegNumber, sellerIBAN, date) 
+      VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-      await this._dbService.query(sql, [parameters.name, parameters.description, parameters.quantity, parameters.measurementUnitId, parameters.userId]).catch((err) => {
+      await this._dbService.query(sql, [parameters.customerId, parameters.sellerId, parameters.customerCompanyName, parameters.customerVAT,
+      parameters.customerRegNumber, parameters.customerIBAN, parameters.sellerCompanyName,
+      parameters.sellerVAT, parameters.sellerRegNumber, parameters.sellerIBAN, new Date()]).catch((err) => {
         log.error(err);
         throw new HttpError(500, "Nu s-a putut face adaugarea!");
       });
 
-      return resolve("Product created!");
+      return resolve("Contract created!");
     } catch (err) {
       return reject(err);
     }
   });
 };
 
-module.exports = ProductService;
+module.exports = ContractService;

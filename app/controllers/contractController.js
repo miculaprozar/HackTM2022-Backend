@@ -9,7 +9,7 @@ const log = require("../services/logService");
 
 let contractRouter = express.Router();
 
-let router = function (contractService, webConstants) {
+let router = function (contractService, userService, webConstants) {
   contractRouter.use((req, res, next) => {
     var contentType = req.headers["content-type"] || "",
       mime = contentType.split(";")[0];
@@ -61,19 +61,31 @@ let router = function (contractService, webConstants) {
       }
       try {
         let parametersCustomer = addParameters({ id: req.body.customerId }, [], "");
-        let customer = await userService.getUsers(parameters);
+        let customer = await userService.getUsers(parametersCustomer);
+        if (!customer[0]) {
+          log.error("No such Customer!");
+          return next(new HttpError(404, "No such Customer!"));
+        }
         let parametersSeller = addParameters({ id: req.body.sellerId }, [], "");
-        let seller = await userService.getUsers(parameters);
+        let seller = await userService.getUsers(parametersSeller);
+        if (!seller[0]) {
+          log.error("No such Seller!");
+          return next(new HttpError(404, "No such Seller!"));
+        }
 
-        let product = {
+        let contract = {
           customerId: req.body.customerId,
           sellerId: req.body.sellerId,
-          name: req.body.name,
-          description: req.body.description ? req.body.description : '',
-          quantity: req.body.quantity,
-          measurementUnitId: req.body.measurementUnitId
+          customerCompanyName: req.body.customerCompanyName ? req.body.customerCompanyName : customer[0].companyName ? customer[0].companyName : "",
+          customerVAT: req.body.customerVAT ? req.body.customerVAT : customer[0].companyVAT ? customer[0].companyVAT : "",
+          customerRegNumber: req.body.customerRegNumber ? req.body.customerRegNumber : customer[0].companyRegNumber ? customer[0].companyRegNumber : "",
+          customerIBAN: req.body.customerIBAN ? req.body.customerIBAN : customer[0].companyIBAN ? customer[0].companyIBAN : "",
+          sellerCompanyName: req.body.sellerCompanyName ? req.body.sellerCompanyName : seller[0].companyName ? seller[0].companyName : "",
+          sellerVAT: req.body.sellerVAT ? req.body.sellerVAT : seller[0].companyVAT ? seller[0].companyVat : "",
+          sellerRegNumber: req.body.sellerRegNumber ? req.body.sellerRegNumber : seller[0].companyRegNumber ? seller[0].companyRegNumber : "",
+          sellerIBAN: req.body.sellerIBAN ? req.body.sellerIBAN : seller[0].companyIBAN ? seller[0].companyIBAN : ""
         };
-        let result = await contractService.createProduct(product);
+        let result = await contractService.createContract(contract);
 
         res.setHeader("Status", 200);
         res.send(result);

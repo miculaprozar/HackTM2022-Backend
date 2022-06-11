@@ -475,6 +475,132 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "ContractController",
+			"item": [
+				{
+					"name": "CreateContract",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n          \"customerId\": 1,\r\n          \"sellerId\": 11,\r\n          \"customerCompanyName\": \"\",\r\n          \"customerVAT\": \"\",\r\n          \"customerRegNumber\": \"\",\r\n          \"customerIBAN\": \"\",\r\n          \"sellerCompanyName\": \"\",\r\n          \"sellerVAT\": \"\",\r\n          \"sellerRegNumber\": \"\",\r\n          \"sellerIBAN\": \"\"\r\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/sc/contract",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"sc",
+								"contract"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetContracts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/sc/contract/?customerId=1&sellerId=11",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"sc",
+								"contract",
+								""
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "1"
+								},
+								{
+									"key": "sellerId",
+									"value": "11"
+								}
+							]
+						},
+						"description": "Available Parameters: ApplicationId, UserId, UserName, LoweredUserName, MobileAlias, IsAnonymous, LastActivityDate, ClientId, ReceivesNotifications"
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateContract",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n          \"customerId\": 1,\r\n          \"sellerId\": 11,\r\n          \"customerCompanyName\": \"\",\r\n          \"customerVAT\": \"\",\r\n          \"customerRegNumber\": \"\",\r\n          \"customerIBAN\": \"\",\r\n          \"sellerCompanyName\": \"\",\r\n          \"sellerVAT\": \"\",\r\n          \"sellerRegNumber\": \"\",\r\n          \"sellerIBAN\": \"\"\r\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/sc/contract/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"sc",
+								"contract",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

@@ -30,6 +30,7 @@
     "productContext": "/api/v1.0/sc/product",
     "orderContext": "/api/v1.0/sc/order",
     "locationContext": "/api/v1.0/sc/location",
-    "measurementUnitContext": "/api/v1.0/sc/measurementUnit"
+    "measurementUnitContext": "/api/v1.0/sc/measurementUnit",
+    "contractContext": "/api/v1.0/sc/contract"
   }
 }
