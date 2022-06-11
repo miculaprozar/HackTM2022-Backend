@@ -37,6 +37,26 @@ ProductService.prototype.getProducts = async function (parameters) {
   });
 };
 
+ProductService.prototype.getMeasurementUnits = async function (parameters) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let sql = `SELECT * from measurementunit `;
+      if (
+        parameters &&
+        typeof parameters === "object" &&
+        Object.keys(parameters).length > 0
+      ) {
+        sql = addQueryConditions(sql, parameters, true, "measurementunit.");
+      }
+      let result = await this._dbService.query(sql);
+
+      return resolve(result);
+    } catch (err) {
+      return reject(err);
+    }
+  });
+};
+
 ProductService.prototype.updateProduct = async function (
   idObject,
   parameters
