@@ -21,7 +21,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"test.test@gmail.com\",\r\n    \"password\": \"testtest\",\r\n    \"firstName\": \"Test\",\r\n    \"lastName\": \"Test\",\r\n    \"roleId\": 1\r\n}",
+							"raw": "{\r\n    \"email\": \"test.test2@gmail.com\",\r\n    \"password\": \"testtest\",\r\n    \"firstName\": \"Test\",\r\n    \"lastName\": \"Test\",\r\n    \"roleId\": 1,\r\n    \"companyName\": \"test\",\r\n    \"companyVAT\": \"test\",\r\n    \"companyRegNumber\": \"test\",\r\n    \"companyIBAN\": \"test\",\r\n    \"details\": \"test\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -98,14 +98,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1.0/tm/user/?roleId=1",
+							"raw": "{{host}}/api/v1.0/sc/user/?roleId=1",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
 								"v1.0",
-								"tm",
+								"sc",
 								"user",
 								""
 							],
@@ -172,7 +172,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"firstName\": \"valentin\",\r\n    \"details\": \"mda\"\r\n}",
+							"raw": "{\r\n    \"firstName\": \"Test\",\r\n    \"lastName\": \"Test\",\r\n    \"companyName\": \"test\",\r\n    \"companyVAT\": \"test\",\r\n    \"companyRegNumber\": \"test nr\",\r\n    \"companyIBAN\": \"test\",\r\n    \"details\": \"test\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

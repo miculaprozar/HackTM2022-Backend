@@ -17,7 +17,8 @@ function UserService(configuration, dbService) {
 UserService.prototype.getUsers = async function (parameters) {
   return new Promise(async (resolve, reject) => {
     try {
-      let sql = `SELECT users.id, users.email, users.firstName, users.lastName, users.roleId, roles.name as roleName
+      let sql = `SELECT users.id, users.email, users.firstName, users.lastName, users.roleId, users.companyName, 
+      users.companyVAT, users.companyRegNumber, users.companyIBAN, users.details, roles.name as roleName
       FROM (users, roles)
       WHERE roles.id = users.roleId`;
 
@@ -222,15 +223,20 @@ UserService.prototype.signUp = async function (parameters, userId) {
           log.error(err);
           return reject("Ceva nu a mers bine la inregistrarea parolei!");
         } else {
-          sql = `INSERT INTO users(email, firstName, lastName, password, roleId) 
-          VALUES(?, ?, ?, ?, ?)`;
+          sql = `INSERT INTO users(email, firstName, lastName, password, roleId, companyName, companyVAT, companyRegNumber, companyIBAN, details) 
+          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
           await this._dbService
             .query(sql, [
               parameters.email,
               parameters.firstName,
               parameters.lastName,
               hash,
-              parameters.roleId
+              parameters.roleId,
+              parameters.companyName,
+              parameters.companyVAT,
+              parameters.companyRegNumber,
+              parameters.companyIBAN,
+              parameters.details,
             ])
             .catch((err) => {
               log.error(err);

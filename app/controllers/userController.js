@@ -146,7 +146,12 @@ let router = function (userService, webConstants) {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           password: req.body.password,
-          roleId: req.body.roleId
+          roleId: req.body.roleId,
+          companyName: req.body.companyName ? req.body.companyName : '',
+          companyVAT: req.body.companyVAT ? req.body.companyVAT : '',
+          companyRegNumber: req.body.companyRegNumber ? req.body.companyRegNumber : '',
+          companyIBAN: req.body.companyIBAN ? req.body.companyIBAN : '',
+          details: req.body.details ? req.body.details : ''
         };
         let result = await userService.signUp(user);
 
