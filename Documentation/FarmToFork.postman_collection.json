@@ -370,7 +370,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Test Product\",\r\n    \"description\": \"test test 2 10\",\r\n    \"quantity\": 2.4,\r\n    \"measurementUnitId\": 1,\r\n    \"price\": 1,\r\n    \"currency\": \"euro\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Mere de Toamna\",\r\n    \"description\": \"Mere de toamna culese proaspat din livada de 1450 mp. Soi: Jonathan\",\r\n    \"quantity\": 450,\r\n    \"measurementUnitId\": 1,\r\n    \"price\": 2,\r\n    \"currency\": \"lei\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -475,6 +475,46 @@
 									"key": "userId",
 									"value": "1"
 								}
+							]
+						},
+						"description": "Available Parameters: ApplicationId, UserId, UserName, LoweredUserName, MobileAlias, IsAnonymous, LastActivityDate, ClientId, ReceivesNotifications"
+					},
+					"response": []
+				},
+				{
+					"name": "GetMeasurementUnits",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/sc/product/measurementUnits",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"sc",
+								"product",
+								"measurementUnits"
 							]
 						},
 						"description": "Available Parameters: ApplicationId, UserId, UserName, LoweredUserName, MobileAlias, IsAnonymous, LastActivityDate, ClientId, ReceivesNotifications"
