@@ -393,6 +393,49 @@
 					"response": []
 				},
 				{
+					"name": "InsertProductImage",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/valen/Downloads/miculaprozar.ro.png"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/sc/product/image/11",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"sc",
+								"product",
+								"image",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "GetProducts",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
