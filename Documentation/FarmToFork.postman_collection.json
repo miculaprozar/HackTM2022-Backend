@@ -180,7 +180,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1.0/sc/user/1",
+							"raw": "{{host}}/api/v1.0/sc/user",
 							"host": [
 								"{{host}}"
 							],
@@ -188,8 +188,7 @@
 								"api",
 								"v1.0",
 								"sc",
-								"user",
-								"1"
+								"user"
 							]
 						}
 					},
