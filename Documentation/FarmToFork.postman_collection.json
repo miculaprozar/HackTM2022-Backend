@@ -370,7 +370,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Test Product\",\r\n    \"description\": \"test test 2 10\",\r\n    \"quantity\": 2.4,\r\n    \"measurementUnitId\": 1\r\n}",
+							"raw": "{\r\n    \"name\": \"Test Product\",\r\n    \"description\": \"test test 2 10\",\r\n    \"quantity\": 2.4,\r\n    \"measurementUnitId\": 1,\r\n    \"price\": 1,\r\n    \"currency\": \"euro\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -451,7 +451,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Test Product\",\r\n    \"description\": \"test test 2 10\",\r\n    \"quantity\": 2.4,\r\n    \"measurementUnitId\": 1\r\n}",
+							"raw": "{\r\n    \"name\": \"Test Product\",\r\n    \"description\": \"test test 2 15\",\r\n    \"quantity\": 2.4,\r\n    \"measurementUnitId\": 1,\r\n    \"price\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -595,6 +595,239 @@
 								"sc",
 								"contract",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OrderController",
+			"item": [
+				{
+					"name": "CreateOrder",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n          \"customerId\": 1,\r\n          \"sellerId\": 11,\r\n          \"locationId\": 1,\r\n          \"products\": [{\"id\": 11,\r\n              \"quantity\": 1.2\r\n          }]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/sc/order",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"sc",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/sc/order/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"sc",
+								"order",
+								""
+							]
+						},
+						"description": "Available Parameters: ApplicationId, UserId, UserName, LoweredUserName, MobileAlias, IsAnonymous, LastActivityDate, ClientId, ReceivesNotifications"
+					},
+					"response": []
+				},
+				{
+					"name": "GetStatuses",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/sc/order/status",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"sc",
+								"order",
+								"status"
+							]
+						},
+						"description": "Available Parameters: ApplicationId, UserId, UserName, LoweredUserName, MobileAlias, IsAnonymous, LastActivityDate, ClientId, ReceivesNotifications"
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrderProducts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/sc/order/products",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"sc",
+								"order",
+								"products"
+							]
+						},
+						"description": "Available Parameters: ApplicationId, UserId, UserName, LoweredUserName, MobileAlias, IsAnonymous, LastActivityDate, ClientId, ReceivesNotifications"
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateOrder",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n          \"customerId\": 1,\r\n          \"sellerId\": 11,\r\n          \"locationId\": 1,\r\n          \"statusId\": 2,\r\n          \"deliveryDate\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/sc/order/51",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"sc",
+								"order",
+								"51"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateOrderProduct",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n          \"AIScore\": 2.1,\r\n          \"AIDetails\": \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1.0/sc/order/AI/11",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1.0",
+								"sc",
+								"order",
+								"AI",
+								"11"
 							]
 						}
 					},

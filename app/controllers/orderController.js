@@ -33,6 +33,18 @@ let router = function (orderService, webConstants) {
     }
   });
 
+  orderRouter.get("/status", checkAuth, async (req, res, next) => {
+    try {
+      let parameters = addParameters(req.query, [], "");
+      let users = await orderService.getStatus(parameters);
+      res.setHeader("Status", 200);
+      res.send(users);
+    } catch (error) {
+      log.error(error.message || error);
+      return next(new HttpError(500, error.message || error));
+    }
+  });
+
   orderRouter.get("/products", checkAuth, async (req, res, next) => {
     try {
       let parameters = addParameters(req.query, [], "");

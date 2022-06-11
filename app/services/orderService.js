@@ -14,18 +14,64 @@ function OrderService(configuration, dbService) {
   this._config = configuration;
 }
 
-OrderService.prototype.getOrders = async function (parameters) {
+OrderService.prototype.getStatus = async function (parameters) {
   return new Promise(async (resolve, reject) => {
     try {
-      let sql = `SELECT * from orders`;
+      let sql = `SELECT * from status`;
       if (
         parameters &&
         typeof parameters === "object" &&
         Object.keys(parameters).length > 0
       ) {
-        sql = addQueryConditions(sql, parameters, true, "orders.");
+        sql = addQueryConditions(sql, parameters, true, "status.");
       }
       let result = await this._dbService.query(sql);
+
+      return resolve(result);
+    } catch (err) {
+      return reject(err);
+    }
+  });
+};
+
+OrderService.prototype.getOrders = async function (parameters) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let sql = `SELECT orders.id, orders.customerId, orders.sellerId, orders.details, orders.locationId, orders.statusId, orders.deliveryDate,
+      u1.email as customerEmail, u1.firstName as customerFirstName, u1.lastName as customerLastName, u1.companyName as customerCompanyName,
+      u1.companyVAT as customerVAT, u1.companyRegNumber as customerRegNumber, u1.companyIBAN as customerIBAN, 
+      u2.email as customerEmail, u2.firstName as sellerFirstName, u2.lastName as sellerLastName, u2.companyName as sellerCompanyName,
+      u2.companyVAT as sellerVAT, u2.companyRegNumber as sellerRegNumber, u2.companyIBAN as sellerIBAN, 
+      l.longitude, l.latitude, l.details as locationDetails,
+      s.name as status
+      from orders 
+      LEFT JOIN users u1 
+      ON orders.customerId = u1.id 
+      LEFT JOIN users u2 
+      ON orders.sellerId = u2.id 
+      LEFT JOIN locations l 
+      ON orders.locationId = l.id 
+      LEFT JOIN status s 
+      ON orders.statusId = s.id`;
+      if (
+        parameters &&
+        typeof parameters === "object" &&
+        Object.keys(parameters).length > 0
+      ) {
+        sql = addQueryConditions(sql, parameters, true, "o.");
+      }
+      let result = await this._dbService.query(sql);
+
+      result = await Promise.all(result.map(async order => {
+        let productDBData = await this._dbService.query(`SELECT productId, productName, productDescription, quantity, measurementUnit, price, currency, AIScore, AIDetails 
+        FROM orderproduct where orderId=?`, [order.id]);
+
+        if (productDBData && productDBData.length > 0) {
+          order.products = productDBData;
+        }
+
+        return order;
+      }))
 
       return resolve(result);
     } catch (err) {
@@ -141,7 +187,7 @@ OrderService.prototype.updateOrderProduct = async function (
 OrderService.prototype.createOrder = async function (parameters) {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log(parameters.products);
+
       parameters.products = await Promise.all(parameters.products.map(async product => {
         let productDBData = await this._dbService.query(`SELECT p.name, p.description, p.price, p.currency, mu.name as measurementUnit from products p, measurementunit mu where p.id=? AND 
         p.measurementUnitId = mu.id`, [product.id]);
