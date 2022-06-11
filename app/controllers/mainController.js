@@ -5,10 +5,12 @@ const cors = require('cors');
 
 //=============================CONTROLLERS=================================
 const UserController = require('./userController');
+const ProductController = require('./productController');
 const LocationController = require('./locationController');
 
 //=============================SERVICES=================================
 const UserService = require('../services/userService');
+const ProductService = require('../services/productService');
 const LocationService = require('../services/locationService');
 
 module.exports = function (dbService, config) {
@@ -28,8 +30,10 @@ module.exports = function (dbService, config) {
 
   var userService = new UserService(config, dbService);
   var locationService = new LocationService(config, dbService);
+  var productService = new ProductService(config, dbService);
   app.use(config.endpoints.userContext, new UserController(userService, config.webConstants));
   app.use(config.endpoints.locationContext, new LocationController(locationService, config.webConstants));
+  app.use(config.endpoints.productContext, new ProductController(productService, config.webConstants));
 
   // middlewares
   // =============================================================================

@@ -90,7 +90,7 @@ ProductService.prototype.createProduct = async function (parameters) {
         throw new HttpError(500, "Nu s-a putut face adaugarea!");
       });
 
-      return resolve("Location created!");
+      return resolve("Product created!");
     } catch (err) {
       return reject(err);
     }
