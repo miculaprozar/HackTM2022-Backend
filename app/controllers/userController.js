@@ -82,11 +82,11 @@ let router = function (userService, webConstants) {
     }
   );
 
-  userRouter.put("/:id", checkAuth, async (req, res, next) => {
+  userRouter.put("/", checkAuth, async (req, res, next) => {
     try {
       let parameters = addParameters(req.body, ["id", "email"], "");
       const result = await userService.updateUser(
-        { id: req.params.id },
+        { id: req.userData.UserId },
         parameters,
         req.userData.UserId
       );

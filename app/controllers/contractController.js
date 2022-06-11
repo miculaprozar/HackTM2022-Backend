@@ -35,9 +35,9 @@ let router = function (contractService, webConstants) {
 
   contractRouter.put("/:id", checkAuth, async (req, res, next) => {
     try {
-      let parameters = addParameters(req.body, ["id", "userId"], "");
+      let parameters = addParameters(req.body, ["id", "customerId", "sellerId"], "");
       const result = await contractService.updateContract(
-        { id: req.params.id, userId: req.userData.UserId },
+        { id: req.params.id },
         parameters
       );
 
@@ -51,9 +51,8 @@ let router = function (contractService, webConstants) {
   contractRouter.post(
     "/", checkAuth,
     [
-      check("name", "Nume obligatoriu").exists(),
-      check("quantity", "Cantitate obligatorie").exists(),
-      check("measurementUnitId", "measurementUnitId obligatoriu").exists()
+      check("customerId", "customerId obligatoriu").exists(),
+      check("sellerId", "sellerId obligatoriu").exists()
     ],
     async (req, res, next) => {
       const validatorError = validationResult(req);
@@ -61,8 +60,14 @@ let router = function (contractService, webConstants) {
         return res.status(400).json({ errors: validatorError.array() });
       }
       try {
+        let parametersCustomer = addParameters({ id: req.body.customerId }, [], "");
+        let customer = await userService.getUsers(parameters);
+        let parametersSeller = addParameters({ id: req.body.sellerId }, [], "");
+        let seller = await userService.getUsers(parameters);
+
         let product = {
-          userId: req.userData.UserId,
+          customerId: req.body.customerId,
+          sellerId: req.body.sellerId,
           name: req.body.name,
           description: req.body.description ? req.body.description : '',
           quantity: req.body.quantity,
