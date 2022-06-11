@@ -33,12 +33,15 @@ UserService.prototype.getUsers = async function (parameters) {
 
       result = await Promise.all(result.map(async user => {
         let locations = await this._dbService.query(`SELECT * from locations where locations.userId=?`, [user.id]);
+        let products = await this._dbService.query(`SELECT * from products where products.userId=?`, [user.id]);
 
         if (locations && locations.length > 0) {
           user.locations = locations;
+          user.products = products;
         }
         else {
           user.locations = [];
+          user.products = [];
         }
         return user;
       }))
