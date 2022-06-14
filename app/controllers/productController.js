@@ -17,10 +17,10 @@ const googleCloud = new Storage({
     __dirname,
     `../../storage.json`
   ),
-  projectId: "civic-badge-262911",
+  projectId: "",
 });
 const photosBucket = googleCloud.bucket(
-  "farmtofork"
+  ""
 );
 
 let productRouter = express.Router();
